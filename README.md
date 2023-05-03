@@ -9,7 +9,7 @@ or
 
 ``` python
 from momo import MomoAdam
-opt = Momo(model.parameters(), lr=1e-2)
+opt = MomoAdam(model.parameters(), lr=1e-2)
 ```
 
 
