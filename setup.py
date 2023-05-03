@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 # Package meta-data.
 NAME = 'momo-opt'
-DESCRIPTION = ''
+DESCRIPTION = 'MoMo: Momentum models for Adaptive Learning Rates'
 URL = 'https://github.com/fabian-sp/MoMo'
 EMAIL = 'fabian.schaipp@gmail.com'
 AUTHOR = 'Fabian Schaipp'

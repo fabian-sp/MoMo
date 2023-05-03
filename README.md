@@ -2,10 +2,14 @@
 Pytorch implementation of MoMo methods. Adaptive learning rates for SGD with momentum (SGD-M) and Adam. 
 
 ``` python
-from momo import Momo, MomoAdam
-
+from momo import Momo
 opt = Momo(model.parameters(), lr=1)
+```
+or
 
+``` python
+from momo import MomoAdam
+opt = Momo(model.parameters(), lr=1e-2)
 ```
 
 

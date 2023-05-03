@@ -1,4 +1,4 @@
-from .momo import MoMo
+from .momo import Momo
 from .momo_adam import MomoAdam
 
 
