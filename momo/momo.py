@@ -95,7 +95,7 @@ class Momo(torch.optim.Optimizer):
             else:
                 self.loss_avg = loss.detach().clone()
         
-        self.loss_avg = beta*self.loss_avg + (1-beta)*loss        
+        self.loss_avg = beta*self.loss_avg + (1-beta)*loss.detach()        
 
         if self.bias_correction:
             rho = 1-beta**self._number_steps # must be after incrementing k
