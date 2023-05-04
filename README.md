@@ -12,6 +12,23 @@ from momo import MomoAdam
 opt = MomoAdam(model.parameters(), lr=1e-2)
 ```
 
+## Examples
+
+### ResNet110 for CIFAR100
+
+<p float="left">
+    <img src="png/cifar100_resnet110.png" width="320" />
+    <img src="png/cifar100_resnet110_training.png" width="305" />
+</p>
+
+### ResNet20 for CIFAR10
+
+
+<p float="left">
+    <img src="png/cifar10_resnet20.png" width="320" />
+    <img src="png/cifar10_resnet20_training.png" width="305" />
+</p>
+
 
 ## Recommendations
 
