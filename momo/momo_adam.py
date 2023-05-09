@@ -63,6 +63,7 @@ class MomoAdam(torch.optim.Optimizer):
         super().__init__(params, defaults)
 
         self.lb = lb
+        self._initial_lb = lb
         self.divide = divide 
         self.use_fstar = use_fstar
         
@@ -163,7 +164,7 @@ class MomoAdam(torch.optim.Optimizer):
                 # Reset
                 if cap < (1+lr*lmbda)*bias_correction1*self.lb:
                     self.lb = cap/(2*(1+lr*lmbda)*bias_correction1) 
-                    self.lb = max(self.lb, 0) # safeguard 
+                    self.lb = max(self.lb, self._initial_lb) # safeguard 
                     
             nom = (1+lr*lmbda)*(self.loss_avg - bias_correction1*self.lb) + _dot - (1+lr*lmbda)*_gamma
                 
@@ -174,7 +175,7 @@ class MomoAdam(torch.optim.Optimizer):
             if self.use_fstar:
                 h = (self.loss_avg  + _dot -  _gamma).item()
                 self.lb = ((h - (1/2)*tau*_grad_norm)/bias_correction1).item() 
-                self.lb = max(self.lb, 0) # safeguard
+                self.lb = max(self.lb, self._initial_lb) # safeguard
                 
             ### Update params
             for p in group['params']:
@@ -200,7 +201,7 @@ class MomoAdam(torch.optim.Optimizer):
         #############################
         ## Maintenance
         if self.use_fstar:
-            self.state['f_star'] = self.lb
+            self.state['fstar'] = self.lb
         
         # If you want to track the adaptive step size term, activate the following line.
         # self.state['step_size_list'].append(t1)

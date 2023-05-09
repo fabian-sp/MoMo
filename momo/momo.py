@@ -56,6 +56,7 @@ class Momo(torch.optim.Optimizer):
         
         self.beta = beta
         self.lb = lb
+        self._initial_lb = lb
         self.bias_correction = bias_correction
         self.use_fstar = use_fstar
         
@@ -146,7 +147,7 @@ class Momo(torch.optim.Optimizer):
                 # Reset
                 if cap < (1+lr*lmbda)*rho*self.lb:
                     self.lb = cap/(2*(1+lr*lmbda)*rho) 
-                    self.lb = max(self.lb, 0) # safeguard
+                    self.lb = max(self.lb, self._initial_lb) # safeguard
 
             ### Compute adaptive step size
             if lmbda > 0:
@@ -163,7 +164,7 @@ class Momo(torch.optim.Optimizer):
             if self.use_fstar:
                 h = (self.loss_avg  + _dot -  _gamma).item()
                 self.lb = ((h - (1/2)*tau*_norm)/rho).item() 
-                self.lb = max(self.lb, 0) # safeguard
+                self.lb = max(self.lb, self._initial_lb) # safeguard
 
             ### Update params
             for p in group['params']:   
