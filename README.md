@@ -9,7 +9,9 @@ You can install the package with
 pip install momo-opt
 ```
 
-Then import the optimizers in Python with
+## Usage
+
+Import the optimizers in Python with
 
 ``` python
 from momo import Momo
@@ -21,6 +23,11 @@ or
 from momo import MomoAdam
 opt = MomoAdam(model.parameters(), lr=1e-2)
 ```
+
+**Note that Momo needs access to the value of the batch loss. You need to pass a ``closure`` into the ``.step()`` method that computes gradients and returns the loss. See an [example script](example.py).**
+
+
+
 
 ## Examples
 
