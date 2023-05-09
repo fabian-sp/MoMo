@@ -1,6 +1,16 @@
 # MoMo
 Pytorch implementation of MoMo methods. Adaptive learning rates for SGD with momentum (SGD-M) and Adam. 
 
+## Installation
+
+You can install the package with
+
+```
+pip install momo-opt
+```
+
+Then import the optimizers in Python with
+
 ``` python
 from momo import Momo
 opt = Momo(model.parameters(), lr=1)
@@ -40,6 +50,8 @@ In general, if you expect SGD-M to work well on your task, then use Momo. If you
 
 * For Momo, the argument `beta` refers to the momentum parameter. The default is `beta=0.9`. For MomoAdam, `(beta1,beta2)` have the same role as in Adam.
 
-* The option `lb` refers to a lower bound of your loss function. In many cases, `lb=0` will be a good enough estimate. If your loss converges to a large positive number (and you roughly know the value), then set `lb` to this value (or slightly smaller).
+* The option `lb` refers to a lower bound of your loss function. In many cases, `lb=0` will be a good enough estimate. If your loss converges to a large positive number (and you roughly know the value), then set `lb` to this value (or slightly smaller). 
+
+* If you can not estimate a lower bound before training, use the option `use_fstar=True`. This will activate an online estimation of the lower bound.
 
 
