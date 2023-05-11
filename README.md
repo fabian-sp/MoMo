@@ -24,7 +24,12 @@ from momo import MomoAdam
 opt = MomoAdam(model.parameters(), lr=1e-2)
 ```
 
-**Note that Momo needs access to the value of the batch loss. You need to pass a ``closure`` into the ``.step()`` method that computes gradients and returns the loss.** 
+**Note that Momo needs access to the value of the batch loss.** 
+In the ``.step()`` method, you need to pass either 
+* the loss tensor (when backward has already been done) to the argument `loss`
+* or a callable ``closure`` to the argument `closure` that computes gradients and returns the loss. 
+
+For example:
 
 ``` python
 def compute_loss(output, labels):
@@ -34,7 +39,7 @@ def compute_loss(output, labels):
 
 # in each training step, use:
 closure = lambda: compute_loss(output,labels)
-opt.step(closure)
+opt.step(closure=closure)
 ```
 **For more details, see [a full example script](example.py).**
 

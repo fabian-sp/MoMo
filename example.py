@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
-from momo import Momo
+from momo import Momo, MomoAdam
 
 # Example neural network
 class Net(nn.Module):
@@ -40,7 +40,11 @@ def train(model, opt, epochs=100):
           opt.zero_grad()
           output = model(input)
           closure = lambda: loss_fn(output, labels) # define a closure that return loss
-          opt.step(closure)
+          
+          opt.step(closure=closure)
+          # alternative:
+          # loss = closure()
+          # opt.step(loss=loss)
 
     # print progress
     if epoch % 10 == 0:
@@ -52,4 +56,5 @@ def train(model, opt, epochs=100):
 if __name__ == '__main__':
    model = Net(d,H)
    opt = Momo(model.parameters(), lr=1)
+   # opt = MomoAdam(model.parameters(), lr=1e-2)
    train(model, opt, epochs=100)
