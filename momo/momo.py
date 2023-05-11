@@ -66,14 +66,14 @@ class Momo(torch.optim.Optimizer):
         
         return
         
-    def step(self, closure: LossClosure=None) -> OptFloat:
+    def step(self, closure: LossClosure) -> OptFloat:
         """
         Performs a single optimization step.
 
         Parameters
         ----------
-        closure : LossClosure, optional
-            A callable that evaluates the model (possibly with backprop) and returns the loss, by default None.
+        closure : LossClosure
+            A callable that evaluates the model (possibly with backprop) and returns the loss.
 
         Returns
         -------
