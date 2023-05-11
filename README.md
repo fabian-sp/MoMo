@@ -24,7 +24,19 @@ from momo import MomoAdam
 opt = MomoAdam(model.parameters(), lr=1e-2)
 ```
 
-**Note that Momo needs access to the value of the batch loss. You need to pass a ``closure`` into the ``.step()`` method that computes gradients and returns the loss. See an [example script](example.py).**
+**Note that Momo needs access to the value of the batch loss. You need to pass a ``closure`` into the ``.step()`` method that computes gradients and returns the loss.** 
+
+``` python
+def compute_loss(output, labels):
+  loss = criterion(output, labels)
+  loss.backward()
+  return loss
+
+# in each training step, use:
+closure = lambda: compute_loss(output,labels)
+opt.step(closure)
+```
+**For more details, see [a full example script](example.py).**
 
 
 
@@ -53,7 +65,7 @@ In general, if you expect SGD-M to work well on your task, then use Momo. If you
 
 * The option `lr` and `weight_decay` are the same as in standard optimizers. As Momo and MomoAdam automatically adapt the learning rate, you should get good preformance without heavy tuning of `lr` and setting a schedule. Setting `lr` constant should work fine. For Momo, our experiments work well with `lr=1`, for MomoAdam `lr=1e-2` (or slightly smaller) should work well.
 
-**One of the main goals of Momo optimizers is to reduce the tuning effort for the learning rate and get good performance for a wide range of learning rates.**
+**One of the main goals of Momo optimizers is to reduce the tuning effort for the learning-rate schedule and get good performance for a wide range of learning rates.**
 
 * For Momo, the argument `beta` refers to the momentum parameter. The default is `beta=0.9`. For MomoAdam, `(beta1,beta2)` have the same role as in Adam.
 
