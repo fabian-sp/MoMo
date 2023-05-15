@@ -1,5 +1,9 @@
 # MoMo
+[![arXiv](https://img.shields.io/badge/arXiv-2305.07583-b31b1b.svg)](https://arxiv.org/abs/2305.07583)
+
 Pytorch implementation of MoMo methods. Adaptive learning rates for SGD with momentum (SGD-M) and Adam. 
+
+*Authors: Fabian Schaipp, Ruben Ohana, Michael Eickenberg, Aaron Defazio, Robert M. Gower*
 
 ## Installation
 
