@@ -72,7 +72,7 @@ opt.step(closure=closure)
 
 In general, if you expect SGD-M to work well on your task, then use Momo. If you expect Adam to work well on your problem, then use MomoAdam.
 
-* The option `lr` and `weight_decay` are the same as in standard optimizers. As Momo and MomoAdam automatically adapt the learning rate, you should get good preformance without heavy tuning of `lr` and setting a schedule. Setting `lr` constant should work fine. For Momo, our experiments work well with `lr=1`, for MomoAdam `lr=1e-2` (or slightly smaller) should work well.
+* The option `lr` and `weight_decay` are the same as in standard optimizers. As Momo and MomoAdam automatically adapt the learning rate, you should get good performance without heavy tuning of `lr` and setting a schedule. In our experiments, we get good results for Momo with constant lerning rate set to `lr=1`; for MomoAdam `lr=1e-2` (or slightly smaller) should work well.
 
 **One of the main goals of Momo optimizers is to reduce the tuning effort for the learning-rate schedule and get good performance for a wide range of learning rates.**
 
@@ -83,3 +83,15 @@ In general, if you expect SGD-M to work well on your task, then use Momo. If you
 * If you can not estimate a lower bound before training, use the option `use_fstar=True`. This will activate an online estimation of the lower bound.
 
 
+## Citation
+
+If you use MoMo, please cite
+
+```
+@Article{Schaipp2023,
+  author        = {Fabian Schaipp and Ruben Ohana and Michael Eickenberg and Aaron Defazio and Robert M. Gower},
+  title         = {Mo{M}o: {M}omentum Models for Adaptive Learning Rates},
+  year          = {2023},
+  month         = may,
+}
+```
