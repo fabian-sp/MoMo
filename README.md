@@ -5,6 +5,10 @@ Pytorch implementation of MoMo methods. Adaptive learning rates for SGD with mom
 
 *Authors: Fabian Schaipp, Ruben Ohana, Michael Eickenberg, Aaron Defazio, Robert M. Gower*
 
+**MoMo and MoMo-Adam are drop-in replacements for SGD-M and Adam in order to reduce learning-rate tuning.**
+We list some recommendations for hyperparamter setting below. 
+
+
 ## Installation
 
 You can install the package with
@@ -28,10 +32,21 @@ from momo import MomoAdam
 opt = MomoAdam(model.parameters(), lr=1e-2)
 ```
 
-**Note that Momo needs access to the value of the batch loss.** 
-In the ``.step()`` method, you need to pass either 
-* the loss tensor (when backward has already been done) to the argument `loss`
-* or a callable ``closure`` to the argument `closure` that computes gradients and returns the loss. 
+**Important: you only need to adapt one line of your training script, described below.** 
+Momo needs access to the value of the (mini-batch) loss in the ``.step()`` method. The easiest way to do this is
+
+``` python
+loss = YOUR_LOSS_FUNCTION()
+loss.backward()
+opt.step(loss=loss)           # the line you need to change
+```
+
+Note that we have passed the loss as `torch.tensor`, you do not need to pass `loss.item()`.
+
+**See [a full example script](example.py).**
+
+
+Alternatively, you can pass a callable ``closure`` to the argument `closure` that computes gradients and returns the loss. 
 
 For example:
 
@@ -45,26 +60,33 @@ def compute_loss(output, labels):
 closure = lambda: compute_loss(output,labels)
 opt.step(closure=closure)
 ```
-**For more details, see [a full example script](example.py).**
-
 
 
 
 ## Examples
 
+For a complete description of our experiments, please see the paper. Below are a few exemplary results.
+
 ### ResNet110 for CIFAR100
 
 <p float="left">
-    <img src="png/cifar100_resnet110.png" width="320" />
-    <img src="png/cifar100_resnet110_training.png" width="305" />
+    <img src="png/cifar100_resnet.png" width="320" />
+    <img src="png/cifar100_resnet_training.png" width="290" />
 </p>
 
-### ResNet20 for CIFAR10
+### ViT for CIFAR10
 
 
 <p float="left">
-    <img src="png/cifar10_resnet20.png" width="320" />
-    <img src="png/cifar10_resnet20_training.png" width="305" />
+    <img src="png/cifar10_vit.png" width="320" />
+    <img src="png/cifar10_vit_training.png" width="290" />
+</p>
+
+### ViT for Imagenet
+
+
+<p float="left">
+    <img src="png/imagenet_vit.png" width="320" />
 </p>
 
 
@@ -72,15 +94,18 @@ opt.step(closure=closure)
 
 In general, if you expect SGD-M to work well on your task, then use Momo. If you expect Adam to work well on your problem, then use MomoAdam.
 
-* The option `lr` and `weight_decay` are the same as in standard optimizers. As Momo and MomoAdam automatically adapt the learning rate, you should get good performance without heavy tuning of `lr` and setting a schedule. In our experiments, we get good results for Momo with constant lerning rate set to `lr=1`; for MomoAdam `lr=1e-2` (or slightly smaller) should work well.
+* The option `lr` and `weight_decay` are the same as in standard optimizers. As Momo and MomoAdam automatically adapt the learning rate, you should get good performance without heavy tuning of the `lr` value and its schedule. Across many of our experiments, Momo with constant lerning rate set to `lr=1` performed very well (see plots above); for MomoAdam we recommend `lr=1e-2` (or slightly smaller).
 
-**One of the main goals of Momo optimizers is to reduce the tuning effort for the learning-rate schedule and get good performance for a wide range of learning rates.**
+* You can still combine Momo(Adam) with your favourite schedule, if you want to (and if you know a good schedule for your problem).
 
-* For Momo, the argument `beta` refers to the momentum parameter. The default is `beta=0.9`. For MomoAdam, `(beta1,beta2)` have the same role as in Adam.
 
-* The option `lb` refers to a lower bound of your loss function. In many cases, `lb=0` will be a good enough estimate. If your loss converges to a large positive number (and you roughly know the value), then set `lb` to this value (or slightly smaller). 
+* The option `lb` refers to a lower bound of your loss function. In many cases, `lb=0` will be a good enough estimate (for instance for all of the above plots we used `lb=0`). If your loss converges to a large positive number (and you roughly know the value), then set `lb` to this value (or slightly smaller). 
 
 * If you can not estimate a lower bound before training, use the option `use_fstar=True`. This will activate an online estimation of the lower bound.
+
+* For Momo, the argument `beta` refers to the momentum parameter. The default is `beta=0.9`. For MomoAdam, `(beta1,beta2)` have the same role as in Adam and default to `(0.9,0.999)`.
+
+
 
 
 ## Citation

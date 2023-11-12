@@ -39,12 +39,12 @@ def train(model, opt, epochs=100):
     for input, labels in dl:
           opt.zero_grad()
           output = model(input)
-          closure = lambda: loss_fn(output, labels) # define a closure that return loss
-          
-          opt.step(closure=closure)
+          loss = loss_fn(output, labels)
+          opt.step(loss=loss)
+
           # alternative:
-          # loss = closure()
-          # opt.step(loss=loss)
+          # closure = lambda: loss_fn(output, labels) # define a closure that return loss
+          # opt.step(closure=closure)
 
     # print progress
     if epoch % 10 == 0:
