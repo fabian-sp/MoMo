@@ -74,6 +74,15 @@ For a complete description of our experiments, please see the paper. Below are a
     <img src="png/cifar100_resnet_training.png" width="290" />
 </p>
 
+### ViT for Imagenet
+
+
+<p float="left">
+    <img src="png/imagenet_vit.png" width="320" />
+    <img src="png/imagenet_vit_training.png" width="290" />
+</p>
+
+
 ### ViT for CIFAR10
 
 
@@ -82,12 +91,6 @@ For a complete description of our experiments, please see the paper. Below are a
     <img src="png/cifar10_vit_training.png" width="290" />
 </p>
 
-### ViT for Imagenet
-
-
-<p float="left">
-    <img src="png/imagenet_vit.png" width="320" />
-</p>
 
 
 ## Recommendations
