@@ -65,7 +65,7 @@ opt.step(closure=closure)
 
 ## Examples
 
-For a complete description of our experiments, please see the paper. Below are a few exemplary results.
+For a complete description of our experiments, please see the paper. Below are a few exemplary results. In the right-hand side plot, we plot the training curves for the best three LR values of each method.
 
 ### ResNet110 for CIFAR100
 
