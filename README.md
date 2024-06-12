@@ -1,13 +1,15 @@
-# MoMo
+# MoMo: Momentum Models for Adaptive Learning Rates [[ICML2024](https://icml.cc/virtual/2024/poster/33842)]
 [![arXiv](https://img.shields.io/badge/arXiv-2305.07583-b31b1b.svg)](https://arxiv.org/abs/2305.07583)
+[![PyPI version fury.io](https://badge.fury.io/py/momo-opt.svg)](https://pypi.python.org/pypi/momo-opt/)
 
-Pytorch implementation of MoMo methods. Adaptive learning rates for SGD with momentum (SGD-M) and Adam. 
+Pytorch implementation of MoMo optimizer. Adaptive learning rates for SGD with momentum (SGD-M) and Adam. 
 
 *Authors: Fabian Schaipp, Ruben Ohana, Michael Eickenberg, Aaron Defazio, Robert M. Gower*
 
 **MoMo and MoMo-Adam are drop-in replacements for SGD-M and Adam in order to reduce learning-rate tuning.**
 We list some recommendations for hyperparamter setting below. 
 
+Note that MoMo is also available in [`optax`](https://optax.readthedocs.io/en/latest/api/contrib.html#optax.contrib.momo).
 
 ## Installation
 
